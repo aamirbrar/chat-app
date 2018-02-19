@@ -11,11 +11,23 @@ var io = SocketIO(server);
 app.use(express.static(PublicPath));
 
 io.on('connection', socket => {
+  socket.emit('newMessage', {
+    from: 'Admin',
+    text: 'Welcome To Chat Application',
+  });
+  socket.broadcast.emit('newMessage', {
+    from: 'Admin',
+    text: 'New User Join',
+  });
   socket.on('createMessage', message => {
-    io.emit('newMessage', {
-      from: message.from,
-      text: message.text,
-    });
+    // io.emit('newMessage', {
+    //   from: message.from,
+    //   text: message.text,
+    // });
+    // socket.broadcast.emit('newMessage', {
+    //   from: message.from,
+    //   text: message.text,
+    // });
   });
 
   socket.on('disconnect', function() {
