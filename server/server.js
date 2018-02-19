@@ -12,12 +12,12 @@ app.use(express.static(PublicPath));
 
 io.on('connection', socket => {
   socket.on('createMessage', message => {
-    console.log('createmsg', message);
+    io.emit('newMessage', {
+      from: message.from,
+      text: message.text,
+    });
   });
-  socket.emit('newMessage', {
-    from: 'Apporio',
-    text: 'Hello How Are You',
-  });
+
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
