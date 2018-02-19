@@ -11,7 +11,13 @@ var io = SocketIO(server);
 app.use(express.static(PublicPath));
 
 io.on('connection', socket => {
-  console.log('New Connection');
+  socket.on('createMessage', message => {
+    console.log('createmsg', message);
+  });
+  socket.emit('newMessage', {
+    from: 'Apporio',
+    text: 'Hello How Are You',
+  });
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
